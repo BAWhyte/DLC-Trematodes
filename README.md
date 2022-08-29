@@ -1,6 +1,6 @@
 # DLC-Trematodes
 
-<img align="right" src="https://user-images.githubusercontent.com/15988774/187104924-b8f2c25f-422c-4617-9067-1c42e431bffa.gif" width="250px">
+<img align="right" src="https://user-images.githubusercontent.com/15988774/187104924-b8f2c25f-422c-4617-9067-1c42e431bffa.gif" width="300px">
 
 Posture tracking of *Himasthla rhigedana* worms using DeepLabCut (DLC). 
 
