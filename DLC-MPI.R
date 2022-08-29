@@ -10,22 +10,16 @@
 cat("\014") # Clear console
 rm(list=ls()) # Remove all variables
 library(ggplot2) # for most graphs
-#library(dplyr) # for data transformations
-#library(tidyr) # for pivot_longer
 library(tidyverse) # for multiple data transforming packages
 library(gganimate) # for animated ggplots
 #library(adehabitatLT) # for spatial data analysis
 library(lubridate) # for time conversion into hh:mm:ss
 library(amt) # for spatial data analysis w/ dplyr commands
-#library(gifski) # for gif outputs of animations
-#library(RColorBrewer) # for color palettes
-#library(stringi) # for converting list into matrix
-#library(data.table) # for transposing df
 library(ggpubr) # for gg density
 
 ## Set working directory + load data
-setwd("/Volumes/GoogleDrive/My Drive/R_folder/1 - Trematodes/DLC-Trematodes")
-data <- read.csv("T6_Before_v1.csv")
+setwd("/Example/path")
+data <- read.csv("DataFrom1HourTracking.csv")
 df <- tibble(data)
 
 ## Function for treating frame as seconds and converting to "D HH:MM:SS" format
@@ -64,11 +58,7 @@ height <- 768
 
 ## BLOCK 1: Density plots (heat maps) ----------------------------------------------------------------------------
 # Source: https://www.r-graph-gallery.com/2d-density-plot-with-ggplot2.html
-
-## Pixel dimensions according to file resolution
-#width <- 1024
-#height <- 768
-xr <- c(200,700) # arbitrary ranges
+xr <- c(200,700) # arbitrary axis ranges
 yr <- c(0,650)
 
 ## Heat map with contounrs, resolution limits
@@ -237,7 +227,7 @@ ggdensity(hbb1, x="step", fill="ID") +
   scale_fill_manual(values=c("#0FB1D2")) +
   labs(title = "Displacement per frame for HIMA 2 mouth")
 
-## BLOCK 3: Wenjing's methods using "amt" -----------------------------------------------------------------------
+## BLOCK 3: Alternative method using "amt" -----------------------------------------------------------------------
 
 ## Read habibi and convert to simple df
 hbb <- read_csv("HABIBI.csv")
