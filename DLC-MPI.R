@@ -1,4 +1,4 @@
-### - MAX PLANCK INSTITUTE DEEPLABCUT PROJECT - ###
+### - MAX PLANCK INSTITUTE OF ANIMAL BEHAVIOR PROJECT [WORM - ###
 # AUTHOR: Brian Whyte, PhD, UC Berkeley
 # EMAIL: ba.whyte@berkeley.edu
 # START DATE: Nov. 18, 2021
@@ -12,14 +12,13 @@ rm(list=ls()) # Remove all variables
 library(ggplot2) # for most graphs
 library(tidyverse) # for multiple data transforming packages
 library(gganimate) # for animated ggplots
-#library(adehabitatLT) # for spatial data analysis
 library(lubridate) # for time conversion into hh:mm:ss
 library(amt) # for spatial data analysis w/ dplyr commands
 library(ggpubr) # for gg density
 
 ## Set working directory + load data
 setwd("/Example/path")
-data <- read.csv("DataFrom1HourTracking.csv")
+data <- read.csv("YourDeepLabCutOutput.csv")
 df <- tibble(data)
 
 ## Function for treating frame as seconds and converting to "D HH:MM:SS" format
