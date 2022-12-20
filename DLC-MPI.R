@@ -18,7 +18,7 @@ library(ggpubr) # for gg density
 
 ## Set working directory + load data
 setwd("/Example/path")
-data <- read.csv("YourDeepLabCutOutput.csv")
+data <- read.csv("YourDeepLabCutOutput.csv") # Real data is not shared, but contact me if you want examples
 df <- tibble(data)
 
 ## Function for treating frame as seconds and converting to "D HH:MM:SS" format
@@ -228,8 +228,8 @@ ggdensity(hbb1, x="step", fill="ID") +
 
 ## BLOCK 3: Alternative method using "amt" -----------------------------------------------------------------------
 
-## Read habibi and convert to simple df
-hbb <- read_csv("HABIBI.csv")
+## Read and convert to simple df
+hbb <- read_csv("YourDataHere.csv") # Real data is not shared, but contact me if you want examples
 hbb1 <- hbb %>%
   filter(ID == "HIMA1", bp == "mouth") %>%
   make_track(x, y, frame, id = ID) %>% # needed to swap "dhms" with "frame"
@@ -265,58 +265,5 @@ p <- ggplot(lf, aes(frame, sum, color=ID)) +
   transition_reveal(frame) 
 animate(p, fps=7, height=4, width=4, units="in", res=100, end_pause=8)
 anim_save("HIMAS_Line2.gif")
-
-## Step scatter w/ linear trend
-hbb1 %>%
-  ggplot(aes(x=t_, y= step )) + 
-  geom_point(alpha=0.1) + 
-  geom_smooth(method = "lm")
-
-## Relative angles (histogram/density plot)
-hbb1 <- hbb %>%
-  filter(ID == "HIMA1", bp == "mouth") %>%
-  make_track(x, y, frame, id = ID) %>% # needed to swap "dhms" with "frame"
-  track_resample(., rate = seconds (4), tolerance = seconds(0.01)) %>% # use only 1 frame per 1 sec?
-  mutate(rel_ang = direction_rel(.)) # %>%
-  #ggplot(aes(x=t_,y=rel_ang)) + geom_point(alpha=0.1)
-hbb2 <- hbb %>%
-  filter(ID == "HIMA2", bp == "mouth") %>%
-  make_track(x, y, frame, id = ID) %>% # needed to swap "dhms" with "frame"
-  track_resample(., rate = seconds (4), tolerance = seconds(0.01)) %>% # use only 1 frame per 1 sec?
-  mutate(rel_ang = direction_rel(.)) # %>%
-#ggplot(aes(x=t_,y=rel_ang)) + geom_point(alpha=0.1)
-hbb3 <- hbb %>%
-  filter(ID == "HIMA3", bp == "mouth") %>%
-  make_track(x, y, frame, id = ID) %>% # needed to swap "dhms" with "frame"
-  track_resample(., rate = seconds (4), tolerance = seconds(0.01)) %>% # use only 1 frame per 1 sec?
-  mutate(rel_ang = direction_rel(.)) # %>%
-#ggplot(aes(x=t_,y=rel_ang)) + geom_point(alpha=0.1)
-df <- rbind(hbb1,hbb2,hbb3) # combine all hbb's by stacking them
-colnames(df) <- c("x","y","frame","ID","burst","rel_ang")
-
-ggdensity(df, x="rel_ang", fill="ID") +
-  scale_fill_manual(values = c("#1ACCEF","#6A8EDC","#D044DA")) +
-  labs(title = "Distribution of rel_ang per 4 sec (HIMA 1 mouth)")
-
-## Calculating (angle?) correlations in every minute using moving window method
-#hbb1 <- read_csv("HABIBI.csv")
-hbb <- read_csv("HABIBI_WX.csv")
-hbb1 <- hbb %>% 
-  filter(ID == "HIMA1", bp == "mouth") %>%
-  make_track(x, y, dhms, id = ID) %>%
-  track_resample(., rate = seconds (1), tolerance = seconds(0.01))
-#hbb1 <- na.omit(hbb1) # remove NA rows
-
-cor = data.frame()
-for (i in 1:(nrow(hbb1)-60)) {
-  cor.i = tac(hbb1[i:(i+60),]) # for every 60 rows?
-  cor = rbind(cor, data.frame(time = hbb1[i,3], cor = cor.i))
-  #print(paste("i = ",i, "/ 85,096"))
-}
-colnames(cor) <- c("t_","ang_cor")
-cor %>%
-  ggplot(aes(x=t_, y= ang_cor)) + 
-  geom_point(alpha=0.1) + 
-  geom_smooth(method = "lm")
 
 
